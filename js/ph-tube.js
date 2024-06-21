@@ -49,7 +49,7 @@ const showAllData = (data) => {
                 alt="Shoes"
               />
             </figure>
-            <div class="card-body">
+            <div class="mt-5 mb-6">
             <div class="flex w-full">
             <div class="avatar mr-3">
              <div class="w-10 rounded-full">
@@ -64,21 +64,18 @@ const showAllData = (data) => {
               </h2>
             </div>
             
-              <h2 class="">
+              <h2 class="ml-[50px]">
                 ${element.authors[0].profile_name}
-                <div class="avatar">
-                <div class="w-10 rounded-full">
-            <i class="fa-solid fa-check"></i>
+                <div class="avatar ml-[6px]">
+                <div class="w-5 rounded-full bg-[#2568EF] mx-auto text-center">
+          <p class="text-white">&#10003</p>
                 </div>
                 
                 </div>
               </h2>
-              <i class="fa-solid fa-check"></i>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div class="card-actions justify-end">
-                <div class="badge badge-outline">Fashion</div>
-                <div class="badge badge-outline">Products</div>
-              </div>
+             
+              <p class="ml-[50px]">${element.others?.views} <span>views</span></p>
+             
             </div>
     `;
     cardContainer.appendChild(cardDiv);
