@@ -33,64 +33,83 @@ const loadAllData = async () => {
   showAllData(data.data);
 };
 const showAllData = (data) => {
-  console.log(data);
+  console.log(data.length);
   const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = "";
-  data.forEach((element) => {
-    // console.log(element);
+  const emptyDataContainer = document.getElementById("empty-data");
+  if (data.length === 0) {
+    cardContainer.innerHTML = "";
+    emptyDataContainer.classList.remove("hidden");
+    emptyDataContainer.classList.add("flex");
+    emptyDataContainer.classList.add("justify-center");
+    // const showEmptyData = document.getElementById("show-empty-data-img");
+    // showEmptyData.innerHTML = emptyDataContainer;
+    // return;
+  } else {
+    cardContainer.innerHTML = "";
+    emptyDataContainer.classList.add("hidden");
+    data.forEach((element) => {
+      // console.log(element);
 
-    const cardDiv = document.createElement("div");
-    cardDiv.classList = `card, w-96, bg-base-100, shadow-xl`;
-    cardDiv.innerHTML = `
-    
-     <figure>
-              <img
-                src=${element.thumbnail}
-                alt="Shoes"
-              />
-            </figure>
-            <div class="mt-5 mb-6">
-            <div class="flex w-full">
-            <div class="avatar mr-3">
-             <div class="w-10 rounded-full">
- <img class =""
-                src=${element.authors[0].profile_picture}
-                alt="Shoes"
-              />
-            </div>
-            </div>
-            
-             <h2 class="card-title font-bold text-[16px]">${element.title}
-              </h2>
-            </div>
-            
-              <h2 class="ml-[50px]">
-                ${element.authors[0].profile_name}
-                <div class="avatar ml-[6px]">
-                <div class="w-5 rounded-full bg-[#2568EF] mx-auto text-center">
-          <p class="text-white">&#10003</p>
-                </div>
-                
-                </div>
-              </h2>
-             
-              <p class="ml-[50px]">${element.others?.views} <span>views</span></p>
-             
-            </div>
-    `;
-    cardContainer.appendChild(cardDiv);
-  });
+      const cardDiv = document.createElement("div");
+      cardDiv.classList = `card, w-96, bg-base-100, shadow-xl`;
+      cardDiv.innerHTML = `
+      
+       <figure>
+                <img
+                  src=${element.thumbnail}
+                  alt="Shoes"
+                />
+              </figure>
+              <div class="mt-5 mb-6">
+              <div class="flex w-full">
+              <div class="avatar mr-3">
+               <div class="w-10 rounded-full">
+   <img class =""
+                  src=${element.authors[0].profile_picture}
+                  alt="Shoes"
+                />
+              </div>
+              </div>
+              
+               <h2 class="card-title font-bold text-[16px]">${element.title}
+                </h2>
+              </div>
+              
+                <h2 class="ml-[50px]">
+                  ${element.authors[0].profile_name}
+                  <div class="avatar ml-[6px]">
+                  <div class="w-5 rounded-full bg-[#2568EF] mx-auto text-center">
+            <p class="text-white">&#10003</p>
+                  </div>
+                  
+                  </div>
+                </h2>
+               
+                <p class="ml-[50px]">${element.others?.views} <span>views</span></p>
+               
+              </div>
+      `;
+      cardContainer.appendChild(cardDiv);
+    });
+  }
 };
 
 // click dynamic button
 
 const clickDynamicButton = (categoryId, clickButton) => {
-  // const buttons = document.querySelectorAll("#category-btn-container");
-  // buttons.forEach((button) => {
-  //   button.disabled = true;
-  // });
-  clickButton.disabled = false;
-  !clickButton.disabled = true
+  // button.disabled = element.category !== "All";
+  const buttons = document.querySelectorAll("#category-btn-container button");
+  buttons.forEach((button) => {
+    button.disabled = false;
+  });
+  clickButton.disabled = true;
+  // if (!clickButton) {
+  //   disabled = true;
+  // } else {
+  //   disabled = false;
+  // }
+  //  .disabled = true;
+
   // clickButton.disabled = false;
   // if (!clickButton) {
   //   disabled = true;
