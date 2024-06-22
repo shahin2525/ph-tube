@@ -7,22 +7,19 @@ const loadCategory = async () => {
 };
 
 const showCatagories = (catagories) => {
-  const background = "##FF1F3D";
+  const categoriesContainer = document.getElementById("category-btn-container");
+  categoriesContainer.innerHTML = "";
   catagories.forEach((element) => {
     // console.log(element);
-    const categoriesContainer = document.getElementById(
-      "category-btn-container"
-    );
 
     const button = document.createElement("button");
     button.classList.add("p-3");
     button.classList.add("m-3");
     button.classList.add("btn");
     button.classList.add("bg-[#FF1F3D]");
-    if (element.category !== "All") {
-      button.disabled = true;
-    }
-    // button.style.cssText = "p-3 m-3 btn btn-[#FF1F3D]";
+
+    button.onclick = () => clickDynamicButton(element.category_id, button);
+    // button.disabled = element.category !== "All";
     button.innerText = element.category;
     categoriesContainer.appendChild(button);
   });
@@ -36,9 +33,12 @@ const loadAllData = async () => {
   showAllData(data.data);
 };
 const showAllData = (data) => {
+  console.log(data);
+  const cardContainer = document.getElementById("card-container");
+  cardContainer.innerHTML = "";
   data.forEach((element) => {
-    console.log(element);
-    const cardContainer = document.getElementById("card-container");
+    // console.log(element);
+
     const cardDiv = document.createElement("div");
     cardDiv.classList = `card, w-96, bg-base-100, shadow-xl`;
     cardDiv.innerHTML = `
@@ -81,5 +81,37 @@ const showAllData = (data) => {
     cardContainer.appendChild(cardDiv);
   });
 };
+
+// click dynamic button
+
+const clickDynamicButton = (categoryId, clickButton) => {
+  // const buttons = document.querySelectorAll("#category-btn-container");
+  // buttons.forEach((button) => {
+  //   button.disabled = true;
+  // });
+  clickButton.disabled = false;
+  !clickButton.disabled = true
+  // clickButton.disabled = false;
+  // if (!clickButton) {
+  //   disabled = true;
+  // }
+  // setTimeout(() => {
+  //   clickButton.disabled = false; // Re-enable the clicked button after a short delay
+  // }, 100);
+
+  showClickData(categoryId);
+};
+
+// music data
+
+const showClickData = async (id) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/videos/category/${id}`
+  );
+  const data = await res.json();
+  console.log(data);
+  showAllData(data.data);
+};
+
 loadAllData();
 loadCategory();
