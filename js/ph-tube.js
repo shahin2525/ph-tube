@@ -1,3 +1,5 @@
+let allVideosData = [];
+let isAscending = true;
 const loadCategory = async () => {
   const res = await fetch(
     "https://openapi.programming-hero.com/api/videos/categories"
@@ -30,10 +32,12 @@ const loadAllData = async () => {
     "https://openapi.programming-hero.com/api/videos/category/1000"
   );
   const data = await res.json();
-  showAllData(data.data);
+  // shortData(data.data);
+  allVideosData = data.data;
+  showAllData(allVideosData);
 };
 const showAllData = (data) => {
-  console.log(data.length);
+  console.log(data);
   const cardContainer = document.getElementById("card-container");
   const emptyDataContainer = document.getElementById("empty-data");
   if (data.length === 0) {
@@ -48,7 +52,7 @@ const showAllData = (data) => {
     cardContainer.innerHTML = "";
     emptyDataContainer.classList.add("hidden");
     data.forEach((element) => {
-      // console.log(element);
+      console.log(element);
 
       const cardDiv = document.createElement("div");
       cardDiv.classList = `card, w-96, bg-base-100, shadow-xl`;
@@ -130,6 +134,49 @@ const showClickData = async (id) => {
   const data = await res.json();
   console.log(data);
   showAllData(data.data);
+};
+
+// const shortData = () => {
+//   const sortedData = [...allVideosData].sort(
+//     (a, b) => b.others.views - a.others.views
+//   );
+//   showAllData(sortedData);
+//   // const sortedData = [...allVideosData].sort(
+//   //   (a, b) => b.others.views - a.others.views
+//   // );
+//   // showAllData(sortedData);
+// };
+const sortData = (data) => {
+  return data.sort((a, b) =>
+    isAscending
+      ? a.others.views - b.others.views
+      : b.others.views - a.others.views
+  );
+};
+const shortData2 = async () => {
+  const res = await fetch(
+    "https://openapi.programming-hero.com/api/videos/category/1000"
+  );
+  const data = await res.json();
+  console.log(data.data);
+  allVideosData = data.data;
+  // const sortedData = viewsData.sort((a, b) => b.others.views - a.others.views);
+  // const reversData = sortedData.revers();
+  // console.log(sortedData);
+  showAllData(sortData(allVideosData));
+};
+const shortData = async () => {
+  // const res = await fetch(
+  //   "https://openapi.programming-hero.com/api/videos/category/1000"
+  // );
+  // const data = await res.json();
+  // console.log(data.data);
+  // const viewsData = data.data;
+  // const sortedData = viewsData.sort((a, b) => b.others.views - a.others.views);
+  // const reversData = sortedData.revers();
+  // console.log(sortedData);
+  isAscending = !isAscending;
+  showAllData(sortData(allVideosData));
 };
 
 loadAllData();
